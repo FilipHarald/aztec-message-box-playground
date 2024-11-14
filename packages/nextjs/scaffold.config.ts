@@ -19,9 +19,11 @@ const customChain: chains.Chain = {
   rpcUrls: {
     default: {
       http: [chainConfig.rpcUrl],
+      webSocket: [chainConfig.rpcUrl.replace("http", "ws")],
     },
     public: {
       http: [chainConfig.rpcUrl],
+      webSocket: [chainConfig.rpcUrl.replace("http", "ws")],
     },
   },
 };

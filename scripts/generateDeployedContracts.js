@@ -1,5 +1,5 @@
 import { createPXEClient, waitForPXE } from "@aztec/aztec.js";
-import { InboxAbi, OutboxAbi } from "@aztec/l1-artifacts";
+import { InboxAbi, OutboxAbi, RollupAbi, FeeJuicePortalAbi } from "@aztec/l1-artifacts";
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -17,13 +17,21 @@ async function generateDeployedContracts() {
 
   const contracts = {
     [info.l1ChainId]: {
-      ["Inbox"]: {
+      Inbox: {
         address: info.l1ContractAddresses.inboxAddress.toString(),
         abi: InboxAbi,
       },
-      ["Outbox"]: {
+      Outbox: {
         address: info.l1ContractAddresses.outboxAddress.toString(),
         abi: OutboxAbi,
+      },
+      Rollup: {
+        address: info.l1ContractAddresses.rollupAddress.toString(),
+        abi: RollupAbi,
+      },
+      FeeJuicePortal: {
+        address: info.l1ContractAddresses.feeJuicePortalAddress.toString(),
+        abi: FeeJuicePortalAbi,
       },
     },
   };
