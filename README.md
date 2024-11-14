@@ -1,3 +1,8 @@
+Playground for sending messages between L1 and L2 using the Aztec inbox/outbox contracts.
+
+Bootstraped with Scaffold-ETH
+
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">

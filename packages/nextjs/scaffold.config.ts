@@ -1,3 +1,4 @@
+import { chainConfig } from "./contracts/deployedContracts";
 import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
@@ -7,10 +8,27 @@ export type ScaffoldConfig = {
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
 };
+const customChain: chains.Chain = {
+  id: chainConfig.chainId,
+  name: "Aztec Ethereum",
+  nativeCurrency: {
+    name: "Ethereum", // Adjust if different
+    symbol: "ETH", // Adjust if different
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: [chainConfig.rpcUrl],
+    },
+    public: {
+      http: [chainConfig.rpcUrl],
+    },
+  },
+};
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [customChain],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

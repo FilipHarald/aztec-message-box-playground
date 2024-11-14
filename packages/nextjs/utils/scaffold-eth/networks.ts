@@ -134,3 +134,7 @@ export function getTargetNetworks(): ChainWithAttributes[] {
     ...NETWORKS_EXTRA_DATA[targetNetwork.id],
   }));
 }
+
+export const getTargetNetwork = () => scaffoldConfig.targetNetworks[0];
+
+export const getRPCUrl = () => getTargetNetwork().rpcUrls.default.http[0];

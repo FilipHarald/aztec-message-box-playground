@@ -24,6 +24,7 @@ export const useDeployedContractInfo = <TContractName extends ContractName>(cont
           setStatus(ContractCodeStatus.NOT_FOUND);
           return;
         }
+        console.log("Checking contract deployment", deployedContract);
 
         const code = await publicClient.getBytecode({
           address: deployedContract.address,

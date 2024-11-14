@@ -18,6 +18,8 @@
     "verify": "hardhat etherscan-verify"
   },
   "dependencies": {
+    "@aztec/aztec.js": "0.61.0",
+    "@aztec/l1-artifacts": "0.61.0",
     "@openzeppelin/contracts": "~5.0.2",
     "@typechain/ethers-v6": "~0.5.1",
     "dotenv": "~16.4.5",

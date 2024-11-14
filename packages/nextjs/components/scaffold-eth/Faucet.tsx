@@ -7,13 +7,13 @@ import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffold-eth";
 import { useTransactor } from "~~/hooks/scaffold-eth";
-import { notification } from "~~/utils/scaffold-eth";
+import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 
 // Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
 
 const localWalletClient = createWalletClient({
-  chain: hardhat,
+  chain: getTargetNetwork(),
   transport: http(),
 });
 
@@ -27,6 +27,13 @@ export const Faucet = () => {
   const [sendValue, setSendValue] = useState("");
 
   const { chain: ConnectedChain } = useAccount();
+  // console.log(ConnectedChain);
+  // console.log(localWalletClient);
+  // localWalletClient.getAddresses().then((accounts) => {
+  //   console.log(accounts);
+  // }).catch((error) => {
+  //   console.error("⚡️ ~ file: Faucet.tsx:getFaucetAddress ~ error", error);
+  // });
 
   const faucetTxn = useTransactor(localWalletClient);
 
@@ -55,6 +62,7 @@ export const Faucet = () => {
   }, []);
 
   const sendETH = async () => {
+    console.log(getTargetNetwork());
     if (!faucetAddress || !inputAddress) {
       return;
     }
