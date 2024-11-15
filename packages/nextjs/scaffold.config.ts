@@ -1,4 +1,4 @@
-import { chainConfig } from "./contracts/deployedContracts";
+import { chainConfig } from "./aztec.config";
 import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
