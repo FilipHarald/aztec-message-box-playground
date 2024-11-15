@@ -12665,6 +12665,7 @@ __metadata:
     "@aztec/l1-artifacts": ^0.62.0
     husky: ~8.0.3
     lint-staged: ~13.2.2
+    prettier: ~3.3.3
   languageName: unknown
   linkType: soft
 
