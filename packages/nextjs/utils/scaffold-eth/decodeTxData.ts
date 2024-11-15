@@ -42,7 +42,7 @@ export const decodeTransactionData = (tx: TransactionWithFunction) => {
       }
     }
     if (!foundInterface) {
-      tx.functionName = "Unknown ABI";
+      tx.functionName = "⚠️ Unknown ABI";
     }
   }
   return tx;

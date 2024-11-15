@@ -46,7 +46,7 @@
     "node": ">=18.18.0"
   },
   "dependencies": {
-    "@aztec/aztec.js": "^0.62.0",
-    "@aztec/l1-artifacts": "^0.62.0"
+    "@aztec/aztec.js": "0.62.0",
+    "@aztec/l1-artifacts": "0.62.0"
   }
 }
