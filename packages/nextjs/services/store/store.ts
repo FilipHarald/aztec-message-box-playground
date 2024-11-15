@@ -1,6 +1,8 @@
 import { create } from "zustand";
+import { contractsData } from "~~/contracts";
 import scaffoldConfig from "~~/scaffold.config";
 import { ChainWithAttributes } from "~~/utils/scaffold-eth";
+import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 /**
  * Zustand Store
@@ -20,6 +22,8 @@ type GlobalState = {
   setIsNativeCurrencyFetching: (newIsNativeCurrencyFetching: boolean) => void;
   targetNetwork: ChainWithAttributes;
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
+  freshContractsData: GenericContractsDeclaration;
+  setFreshContractsData: (newFreshContractsData: GenericContractsDeclaration) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
@@ -33,4 +37,7 @@ export const useGlobalState = create<GlobalState>(set => ({
     set(state => ({ nativeCurrency: { ...state.nativeCurrency, isFetching: newValue } })),
   targetNetwork: scaffoldConfig.targetNetworks[0],
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
+  freshContractsData: contractsData,
+  setFreshContractsData: (newFreshContractsData: GenericContractsDeclaration) =>
+    set(() => ({ freshContractsData: newFreshContractsData })),
 }));
