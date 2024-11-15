@@ -1,4 +1,4 @@
-import { createPXEClient, waitForPXE } from "@aztec/aztec.js";
+import { createAztecNodeClient } from "@aztec/aztec.js";
 import { InboxAbi, OutboxAbi, RollupAbi, FeeJuicePortalAbi } from "@aztec/l1-artifacts";
 import fs from 'fs';
 import path from 'path';
@@ -11,9 +11,8 @@ async function generateDeployedContracts() {
   console.log("Generating deployed contracts...");
   const AZTEC_URL = "http://aztec-sandbox-node.localhost";
   const ETHEREUM_URL = "http://anvil-ethereum-node.localhost";
-  const pxe = createPXEClient(AZTEC_URL);
-  await waitForPXE(pxe);
-  const info = await pxe.getNodeInfo();
+  const nodeClient = createAztecNodeClient(AZTEC_URL);
+  const info = await nodeClient.getNodeInfo();
 
   const contracts = {
     [info.l1ChainId]: {
