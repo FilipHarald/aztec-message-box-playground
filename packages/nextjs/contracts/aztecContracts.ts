@@ -4,6 +4,11 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
+export const chainConfig = {
+  "chainId": 31337,
+  "rpcUrl": "http://anvil-ethereum-node.localhost"
+};
+
 const aztecContracts = {
   "31337": {
     "Inbox": {

@@ -1,15 +1,79 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { L1ContractAddresses } from "@aztec/ethereum";
+import { FeeJuicePortalAbi, InboxAbi, OutboxAbi, RollupAbi } from "@aztec/l1-artifacts";
+import { JSONRPCClient } from "json-rpc-2.0";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { l2Config } from "~~/aztec.config";
+import { InputBase } from "~~/components/scaffold-eth";
+import { deepMergeContracts } from "~~/contracts/utils";
+import { useGlobalState } from "~~/services/store/store";
+import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
+
+const getAztecNodeClient = (aztecNodeAddress: string) => {
+  const client: JSONRPCClient = new JSONRPCClient(jsonRPCRequest =>
+    fetch(aztecNodeAddress, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(jsonRPCRequest),
+    }).then(response => {
+      if (response.status === 200) {
+        // Use client.receive when you received a JSON-RPC response.
+        return response.json().then(jsonRPCResponse => client.receive(jsonRPCResponse));
+      } else if (jsonRPCRequest.id !== undefined) {
+        return Promise.reject(new Error(response.statusText));
+      }
+    }),
+  );
+  return client;
+};
 
 const Home: NextPage = () => {
   // TODO: add state for Aztec node address
-  // TODO: add onSubmit function for updating smart contracts
-  //    1. retreive chainId from Aztec node
-  //    2. retreive contract-addresses from Aztec node
-  //    3. update aztecContracts with addresses and ABIs (for correct chainId)
+  const [aztecNodeAddress, setAztecNodeAddress] = useState<string>(l2Config.rpcUrl);
+  const oldContracts = useGlobalState(({ freshContractsData }) => freshContractsData);
+  const setFreshContractsData = useGlobalState(({ setFreshContractsData }) => setFreshContractsData);
+
+  const onChange = (value: string) => {
+    setAztecNodeAddress(value);
+  };
+  const onSubmit = () => {
+    const client = getAztecNodeClient(aztecNodeAddress);
+    Promise.all([client.request("node_getL1ContractAddresses", []), client.request("node_getChainId", [])]).then(
+      res => {
+        const l1ContractAddresses = res[0] as L1ContractAddresses;
+        const chainId = res[1] as number;
+        console.log(l1ContractAddresses, chainId);
+        const newContracts = {
+          [chainId]: {
+            Inbox: {
+              address: l1ContractAddresses.inboxAddress.toString(),
+              abi: InboxAbi,
+            },
+            Outbox: {
+              address: l1ContractAddresses.outboxAddress.toString(),
+              abi: OutboxAbi,
+            },
+            Rollup: {
+              address: l1ContractAddresses.rollupAddress.toString(),
+              abi: RollupAbi,
+            },
+            FeeJuicePortal: {
+              address: l1ContractAddresses.feeJuicePortalAddress.toString(),
+              abi: FeeJuicePortalAbi,
+            },
+          },
+        } as GenericContractsDeclaration;
+        setFreshContractsData(deepMergeContracts(oldContracts, newContracts));
+      },
+    );
+  };
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -25,8 +89,15 @@ const Home: NextPage = () => {
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             After that you can tinker and explore just like you would on a local chain.
           </div>
-          {/* TODO: add input for Aztec node address */}
-          {/* TODO: add button for submit */}
+          <InputBase
+            name="aztec-node-address"
+            value={aztecNodeAddress}
+            placeholder="Aztec Node Address"
+            onChange={onChange}
+          />
+          <button className="btn btn-primary mt-4" onClick={onSubmit}>
+            SUBMIT
+          </button>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">

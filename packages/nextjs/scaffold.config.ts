@@ -1,4 +1,4 @@
-import { chainConfig } from "./aztec.config";
+import { l1Config as chainConfig } from "./aztec.config";
 import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
