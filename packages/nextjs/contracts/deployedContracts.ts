@@ -9,7 +9,7 @@ export const chainConfig = {
 const deployedContracts: GenericContractsDeclaration = {
   "31337": {
     "Inbox": {
-      "address": "0xba94c268049dd87ded35f41f6d4c7542b4bdb767",
+      "address": "0xed179b78d5781f93eb169730d8ad1be7313123f4",
       "abi": [
         {
           "type": "constructor",
@@ -240,7 +240,7 @@ const deployedContracts: GenericContractsDeclaration = {
       ]
     },
     "Outbox": {
-      "address": "0x72c1e366e34ac57376bc71bda0c093b89adb57ee",
+      "address": "0x1016b5aaa3270a65c315c664ecb238b6db270b64",
       "abi": [
         {
           "type": "constructor",
@@ -576,7 +576,7 @@ const deployedContracts: GenericContractsDeclaration = {
       ]
     },
     "Rollup": {
-      "address": "0x851356ae760d987e095750cceb3bc6014560891c",
+      "address": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
       "abi": [
         {
           "type": "constructor",
@@ -2713,7 +2713,7 @@ const deployedContracts: GenericContractsDeclaration = {
       ]
     },
     "FeeJuicePortal": {
-      "address": "0xa82ff9afd8f496c3d6ac40e2a0f282e47488cfc9",
+      "address": "0x0165878a594ca255338adfa4d48449f69242eb8f",
       "abi": [
         {
           "type": "constructor",
